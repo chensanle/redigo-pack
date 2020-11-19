@@ -17,13 +17,14 @@ type RedigoPack struct {
 
 var RedigoConn = new(RedigoPack)
 
-func NewConnectionWithFile(addr, password string) error {
+func NewConnectionByPool(pool2 *redis.Pool) *RedigoPack {
+	initPool(pool2)
 
-	initPool(addr, password)
-	return nil
+	return new(RedigoPack)
 }
 
-func NewConnectionByPool(pool2 *redis.Pool) error {
-	initPoolByOld(pool2)
-	return nil
+var pool *redis.Pool
+
+func initPool(old *redis.Pool) {
+	pool = old
 }

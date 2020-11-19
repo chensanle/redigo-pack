@@ -1,11 +1,12 @@
 package redigo_pack
 
 import (
+	"github.com/gomodule/redigo/redis"
 	"testing"
 )
 
 func TestKeyRds_Key(t *testing.T) {
-	NewConnectionWithFile("redis", "./config/config.ini")
+	NewConnectionByPool(&redis.Pool{})
 	type T struct {
 		Key   string
 		Value float64
@@ -96,7 +97,7 @@ func TestKeyRds_Key(t *testing.T) {
 }
 
 func TestKeyRds_Del(t *testing.T) {
-	NewConnectionWithFile("redis", "./config/config.ini")
+	NewConnectionByPool(&redis.Pool{})
 	key := "1"
 	err := RedigoConn.String.Set(key, 2, 10).error
 	if err != nil {
