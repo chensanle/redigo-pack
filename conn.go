@@ -15,36 +15,34 @@ type RedigoPack struct {
 	Db     dbRds
 }
 
-var packPool *PackPool
+var pool *redis.Pool
 
-type PackPool struct {
-	*redis.Pool
-}
+
 
 var RedigoConn = new(RedigoPack)
 
-func NewConnectionByPool(p *PackPool) *RedigoPack {
-	packPool = p
+func NewConnectionByPool(p *redis.Pool) *RedigoPack {
+	pool = p
 
 	return RedigoConn
 }
 
 // Note! release the conn
 func GetConn() redis.Conn {
-	if packPool == nil {
+	if pool == nil {
 		return nil
 	}
-	return packPool.Get()
+	return pool.Get()
 }
 
 // Note! release the conn
 func GetPubSubConn() *redis.PubSubConn {
-	if packPool == nil {
+	if pool == nil {
 		return nil
 	}
 
 	psc := new(redis.PubSubConn)
-	psc.Conn = packPool.Get()
+	psc.Conn = pool.Get()
 
 	return psc
 }
