@@ -6,7 +6,7 @@ redis的使用更简单
 支持和redigo同时使用
 
 ### 安装
-`go get -u -v github.com/newgoo/redigo-pack`
+`go get -u -v github.com/chensanle/redigo-pack`
 
 ### 使用
 ```go
@@ -15,20 +15,19 @@ package main
 import (
 	"fmt"
 
-	"github.com/newgoo/redigo-pack"
+	"github.com/chensanle/redigo-pack"
+	"github.com/gomodule/redigo/redis"
 )
 
-func init() {
-    redigo_pack.InitPool("", "")
-}
+var RedigoConn = redigo_pack.NewConnectionByPool(&redis.Pool{})
 
 func main() {
-	err := redigo_pack.RedigoConn.String.Set("1", 2, 10).Error()
+	err := RedigoConn.String.Set("1", 2, 10).Error()
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
-	v, err := redigo_pack.RedigoConn.String.Get("1").Int64()
+	v, err := RedigoConn.String.Get("1").Int64()
 	if err != nil {
 		fmt.Println(err)
 		return

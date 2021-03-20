@@ -1,13 +1,16 @@
 package redigo_pack
 
-import "testing"
+import (
+	"github.com/gomodule/redigo/redis"
+	"testing"
+)
 
 func TestHashRds_Hash(t *testing.T) {
 	type Hash struct {
 		Name string
 		Age  int64
 	}
-	NewConnectionWithFile("redis", "./config/config.ini")
+	NewConnectionByPool(&redis.Pool{})
 
 	key := "hash"
 	h := &Hash{"newgoo", 24}
@@ -33,7 +36,7 @@ func TestHashRds_HGetAndSet(t *testing.T) {
 		Value int64
 	}
 
-	NewConnectionWithFile("redis", "./config/config.ini")
+	NewConnectionByPool(&redis.Pool{})
 
 	key := "HashSet"
 	hs := []HSet{
@@ -129,7 +132,7 @@ func TestHashRds_HIncr(t *testing.T) {
 		Value int64
 	}
 
-	NewConnectionWithFile("redis", "./config/config.ini")
+	NewConnectionByPool(&redis.Pool{})
 
 	key := "HashSet"
 	hs := []HSet{
@@ -169,7 +172,7 @@ func TestHashRds_HIncrByFloat(t *testing.T) {
 		Value int64
 	}
 
-	NewConnectionWithFile("redis", "./config/config.ini")
+	NewConnectionByPool(&redis.Pool{})
 
 	key := "HashSet"
 	hs := []HSet{
@@ -203,7 +206,7 @@ func TestHashRds_HIncrByFloat(t *testing.T) {
 }
 
 func TestHashRds_HMSetFromMap(t *testing.T) {
-	NewConnectionWithFile("redis", "./config/config.ini")
+	NewConnectionByPool(&redis.Pool{})
 	key := "maphash"
 	mp := map[interface{}]interface{}{"filed1": 5, "filed2": 6}
 	err := RedigoConn.Hash.HMSetFromMap(key, mp).error
