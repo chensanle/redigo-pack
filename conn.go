@@ -28,7 +28,7 @@ func NewConnectionByPool(p *redis.Pool) *RedigoPack {
 }
 
 // Note! release the conn
-func GetConn() redis.Conn {
+func (p *RedigoPack) GetConn() redis.Conn {
 	if pool == nil {
 		return nil
 	}
@@ -36,7 +36,7 @@ func GetConn() redis.Conn {
 }
 
 // Note! release the conn
-func GetPubSubConn() *redis.PubSubConn {
+func (p *RedigoPack) GetPubSubConn() *redis.PubSubConn {
 	if pool == nil {
 		return nil
 	}
